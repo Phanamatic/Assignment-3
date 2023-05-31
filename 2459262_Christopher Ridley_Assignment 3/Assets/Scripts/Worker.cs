@@ -29,7 +29,7 @@ public class Worker : MonoBehaviour
         destination = workersBase.gameObject;
     }
 
-    bool IsCloseTo(Vector3 targetPosition, float tolerance = 2.0f)
+    bool IsCloseTo(Vector3 targetPosition, float tolerance = 0.5f)
     {
     return Vector3.Distance(transform.position, targetPosition) < tolerance;
     }
