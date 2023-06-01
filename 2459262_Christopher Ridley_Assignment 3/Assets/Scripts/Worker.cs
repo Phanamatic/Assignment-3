@@ -11,17 +11,10 @@ public class Worker : MonoBehaviour
     private bool isTaskCompleted = false; // A flag to indicate if the task is completed
     private bool returningToBase = false; // A flag to indicate if the worker is returning to base
     public WaitForSeconds taskCompletionDelay = new WaitForSeconds(2); // 2 seconds to complete a task
+    
 
-    public enum TaskType
-    {
-        None,
-        Feeding,
-        Playing,
-        Cleaning,
-        BedTime
-    }
 
-    public TaskType currentTask;
+    public TaskManager.Task currentTask;
 
     void Start()
     {
@@ -34,7 +27,7 @@ public class Worker : MonoBehaviour
     return Vector3.Distance(transform.position, targetPosition) < tolerance;
     }
 
-    void Update()
+void Update()
 {
     // If returning to base, move towards base
     if (returningToBase)
@@ -53,6 +46,7 @@ public class Worker : MonoBehaviour
         if (IsCloseTo(targetAnimal.transform.position) && !isTaskCompleted)
         {
             StartCoroutine(PerformTask());
+            isTaskCompleted = true; // Set flag to prevent starting the task again
         }
     }
     else if (targetAnimal == null)
@@ -62,6 +56,7 @@ public class Worker : MonoBehaviour
     }
 }
 
+
     void MoveTo(Vector3 targetPosition)
     {
         float step = speed * Time.deltaTime;
@@ -70,39 +65,24 @@ public class Worker : MonoBehaviour
 
     IEnumerator PerformTask()
     {
-        isTaskCompleted = true;
+    isTaskCompleted = true;
+    
 
-        switch (currentTask)
-        {
-            case TaskType.Feeding:
-                targetAnimal.hunger -= 2;
-                energy -= 1;
-                break;
-            case TaskType.Playing:
-                targetAnimal.attention += 2;
-                energy -= 1.5f;
-                break;
-            case TaskType.Cleaning:
-                targetAnimal.cleanliness += 2;
-                energy -= 0.5f;
-                break;
-            case TaskType.BedTime:
-                targetAnimal.energy += 2;
-                energy -= 1;
-                break;
-        }
+    // Use TaskManager to perform the task
+    TaskManager.Instance.ExecuteTask(this, targetAnimal, currentTask);
 
-        // Wait for task to be completed
-        yield return taskCompletionDelay;
+    // Wait for task to be completed
+    yield return taskCompletionDelay;
 
-        // Task is finished, clear target and task
-        targetAnimal = null;
-        currentTask = TaskType.None;
-        isTaskCompleted = false;
+    // Task is finished, clear target and task
+    targetAnimal = null;
+    currentTask = TaskManager.Task.None;
+    isTaskCompleted = false;
 
-        // Set flag to return to base
-        returningToBase = true;
+    // Set flag to return to base
+    returningToBase = true;
     }
+
 }
 
 

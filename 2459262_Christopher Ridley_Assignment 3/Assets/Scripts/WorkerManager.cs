@@ -18,19 +18,19 @@ public class WorkerManager : MonoBehaviour
                     if (animal.cleanliness < 50)
                     {
                         worker.targetAnimal = animal;
-                        worker.currentTask = Worker.TaskType.Cleaning;
+                        worker.currentTask = TaskManager.Task.Cleaning;
                         break;
                     }
                     else if (animal.hunger > 50)
                     {
                         worker.targetAnimal = animal;
-                        worker.currentTask = Worker.TaskType.Feeding;
+                        worker.currentTask = TaskManager.Task.Feeding;
                         break;
                     }
                     else if (animal.attention < 50)
                     {
                         worker.targetAnimal = animal;
-                        worker.currentTask = Worker.TaskType.Playing;
+                        worker.currentTask = TaskManager.Task.Playing;
                         break;
                     }
                 }

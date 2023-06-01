@@ -13,7 +13,7 @@ TagManager:
   - UI
   - 
   - 
-  - 
+  - Pens
   - 
   - 
   - 
@@ -40,4 +40,40 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: New Layer 1
+    uniqueID: 3691669063
+    locked: 0
+  - name: New Layer 2
+    uniqueID: 797112533
+    locked: 0
+  - name: New Layer 3
+    uniqueID: 1126055533
+    locked: 0
+  - name: New Layer 4
+    uniqueID: 3999298103
+    locked: 0
+  - name: New Layer 5
+    uniqueID: 1519733751
+    locked: 0
+  - name: New Layer 6
+    uniqueID: 1846937389
+    locked: 0
+  - name: New Layer 7
+    uniqueID: 3642084717
+    locked: 0
+  - name: New Layer 8
+    uniqueID: 3534571367
+    locked: 0
+  - name: New Layer 9
+    uniqueID: 2555672083
+    locked: 0
+  - name: New Layer 10
+    uniqueID: 1384903845
+    locked: 0
+  - name: New Layer 11
+    uniqueID: 1809676705
+    locked: 0
+  - name: New Layer 12
+    uniqueID: 3075546045
     locked: 0

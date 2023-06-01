@@ -10,34 +10,53 @@ public class Selectable : MonoBehaviour
     public bool isAnimal; // Set this to true for animals and false for workers
 
     void OnMouseDown() // This method is called when the object is clicked
-{
-    Debug.Log("Clicked on: " + gameObject.name);
-
-    if (taskManager.currentTask == TaskManager.Task.None)
     {
+
+        Debug.Log("Clicked on: " + gameObject.name);
+
         if (isAnimal)
         {
             Animal animal = GetComponent<Animal>();
-            animalStatsUI.DisplayStats(animal);
+            if (animal.status == "Dead")
+            {
+                Debug.Log("This animal is dead and cannot be selected.");
+                return;
+            }
+        }
+
+
+        if (taskManager.currentTask == TaskManager.Task.None)
+        {
+            if (isAnimal)
+            {
+                Animal animal = GetComponent<Animal>();
+                animalStatsUI.DisplayStats(animal);
+            }
+            else
+            {
+                Worker worker = GetComponent<Worker>();
+                workerStatsUI.DisplayStats(worker);
+                taskManager.currentWorker = worker;
+                taskManager.taskPanel.SetActive(true); // Show task panel
+            }
         }
         else
         {
-            Worker worker = GetComponent<Worker>();
-            workerStatsUI.DisplayStats(worker);
-            taskManager.currentWorker = worker;
-            taskManager.taskPanel.SetActive(true); // Show task panel
+            if (isAnimal)
+            {
+                if(taskManager.currentWorker != null)
+                {
+                Debug.Log("Setting currentAnimal to: " + gameObject.name);
+                taskManager.currentAnimal = GetComponent<Animal>();
+                taskManager.ExecuteTask(taskManager.currentWorker, taskManager.currentAnimal, taskManager.currentTask);
+                }
+                else 
+                {
+                    Debug.Log("Current worker is null.");
+                }
+            }
         }
     }
-    else
-    {
-        if (isAnimal)
-        {
-            Debug.Log("Setting currentAnimal to: " + gameObject.name);
-            taskManager.currentAnimal = GetComponent<Animal>();
-            taskManager.ExecuteTask(); // Execute task
-        }
-    }
-}
 }
 
 
